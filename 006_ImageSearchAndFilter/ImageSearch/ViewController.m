@@ -41,7 +41,7 @@
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
     UIImageView* imageView = (UIImageView*)[cell viewWithTag:101];
-    
+    imageView.image = nil;
     FlickrItem* item = [_items objectAtIndex:indexPath.row];
     
     NSURL* url = [NSURL URLWithString:item.thumbnailURL];
@@ -54,7 +54,9 @@
         // get access to the main dispatch queue
         dispatch_queue_t mainDispatchQueue = dispatch_get_main_queue();
         dispatch_async(mainDispatchQueue, ^{
-            imageView.image = [UIImage imageWithData:data];
+            UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+            UIImageView* imgView = (UIImageView*)[cell viewWithTag:101];
+            imgView.image = [UIImage imageWithData:data];
         });
     });
     return cell;
