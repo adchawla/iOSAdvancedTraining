@@ -19,6 +19,10 @@ int main(int argc, char * argv[]) {
         return var1 + var2;
     };
     
+    int var3 = myblock();
+    
+    NSLog(@"var3 = %d", var3);
+    
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
