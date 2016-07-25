@@ -20,13 +20,24 @@ const CGFloat kFaceBoundsToEyeScaleFactor = 4.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSURL* url = [NSURL URLWithString:self.imageURL];
+    
+    // get access to the global dispatch queue
+    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(concurrentQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL:url];
+        UIImage* image =[UIImage imageWithData:data];
+        
+        // get access to the main dispatch queue
+        dispatch_queue_t mainDispatchQueue = dispatch_get_main_queue();
+        dispatch_async(mainDispatchQueue, ^{
+            self.imageView.image = image;
+            __block UIImage * overlayImage;
+            overlayImage = [self faceOverlayImageFromImage:image];
+            [self fadeInNewImage:overlayImage];
+        });
+    });
 
-    NSData* data = [NSData dataWithContentsOfURL:url];
-    UIImage* image =[UIImage imageWithData:data];
-    self.imageView.image = image;
-
-    UIImage *overlayImage = [self faceOverlayImageFromImage:image];
-    [self fadeInNewImage:overlayImage];
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -45,8 +45,18 @@
     FlickrItem* item = [_items objectAtIndex:indexPath.row];
     
     NSURL* url = [NSURL URLWithString:item.thumbnailURL];
-    NSData* data = [NSData dataWithContentsOfURL:url];
-    imageView.image = [UIImage imageWithData:data];
+    
+    // get access to the global dispatch queue
+    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(concurrentQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL:url];
+
+        // get access to the main dispatch queue
+        dispatch_queue_t mainDispatchQueue = dispatch_get_main_queue();
+        dispatch_async(mainDispatchQueue, ^{
+            imageView.image = [UIImage imageWithData:data];
+        });
+    });
     return cell;
     
     
@@ -68,10 +78,18 @@
     NSLog(@"Begin");
     NSString* text = self.searchTextField.text;
     NSString* link = [fetcher getFlickrURL:text];
-    NSString* data = [fetcher getFlickrDataFromURL:link];
-    _items = [fetcher parseFlickrItems:data];
-    
-    [self.imagesCollectionView reloadData];
+    // get access to the global dispatch queue
+    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(concurrentQueue, ^{
+        NSString* data = [fetcher getFlickrDataFromURL:link];
+        _items = [fetcher parseFlickrItems:data];
+        
+        // get access to the main dispatch queue
+        dispatch_queue_t mainDispatchQueue = dispatch_get_main_queue();
+        dispatch_async(mainDispatchQueue, ^{
+            [self.imagesCollectionView reloadData];
+        });
+    });
     NSLog(@"Done");
 
 }
