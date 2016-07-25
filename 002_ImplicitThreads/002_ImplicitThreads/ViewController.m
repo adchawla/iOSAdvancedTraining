@@ -29,7 +29,8 @@
 }
 
 - (IBAction)implicitThread :(id)sender {
-    [self blockingCall];
+    //[self blockingCall];
+    [self performSelectorInBackground:@selector(blockingCall) withObject:self];
 }
 
 @end
