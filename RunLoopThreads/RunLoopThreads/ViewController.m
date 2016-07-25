@@ -30,14 +30,14 @@
 }
 
 - (void) downloadImage {
-    NSString * str = @"https://www.google.co.in/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwi84J2fhY7OAhXQFsAKHWT0DAEQjRwIBw&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3AApple_logo_black.svg&psig=AFQjCNFd0q8COSvsTpooc26MlhJnLRNP9w&ust=1469516377002987";
+    NSString * str = @"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1000px-Apple_logo_black.svg.png";
     NSURL * url = [NSURL URLWithString:str];
     NSData * data = [NSData dataWithContentsOfURL:url];
     UIImage * image = [UIImage imageWithData:data];
     if ( image != nil) {
         NSLog(@"Image Downloaded");
     }
-}   
+}
 
 - (IBAction)executeTask:(id)sender {
     [self performSelector:@selector(downloadImage) onThread:timerThread withObject:nil waitUntilDone:NO];
