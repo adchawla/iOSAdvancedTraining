@@ -25,7 +25,11 @@
 }
 
 - (void) blockingCall {
-    [NSThread sleepForTimeInterval:10];
+    // to make sure the newly created thread has a auto release pool, otherwise
+    // it may leak lot of memory.
+    @autoreleasepool {
+        [NSThread sleepForTimeInterval:10];
+    }
 }
 
 - (IBAction)implicitThread :(id)sender {
