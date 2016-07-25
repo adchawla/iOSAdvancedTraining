@@ -24,11 +24,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) changeLabel {
+    [_label setText:@"Done"];
+}
+
 - (void) blockingCall {
     // to make sure the newly created thread has a auto release pool, otherwise
     // it may leak lot of memory.
     @autoreleasepool {
         [NSThread sleepForTimeInterval:10];
+        [self performSelectorOnMainThread:@selector(changeLabel) withObject:self waitUntilDone:YES];
     }
 }
 
