@@ -24,6 +24,13 @@
                                     <action selector="stopThread:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Vt-W3-r5U"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ug-lg-6y8">
+                                <rect key="frame" x="20" y="72" width="164" height="30"/>
+                                <state key="normal" title="Execute Task on Thread"/>
+                                <connections>
+                                    <action selector="executeTask:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SR0-zb-N1q"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

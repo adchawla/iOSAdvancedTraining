@@ -36,8 +36,9 @@
         
         [runLoop addTimer:timer forMode:NSDefaultRunLoopMode];
         
-        //NSPort * port = [[NSMachPort alloc] init];
-        //[runLoop addPort: port forMode:NSDefaultRunLoopMode];
+        NSPort * port = [[NSMachPort alloc] init];
+        [runLoop addPort: port forMode:NSDefaultRunLoopMode];
+        
         // start the run loop
         CFRunLoopRun();
         
