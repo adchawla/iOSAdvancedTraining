@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		460919FD1D46275E00B76320 /* MaximumTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 460919FC1D46275E00B76320 /* MaximumTasks.m */; };
 		8978347E1D41309500522D4E /* FlickrFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8978347D1D41309500522D4E /* FlickrFetcher.m */; };
 		897834811D41320000522D4E /* FlickrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 897834801D41320000522D4E /* FlickrItem.m */; };
 		897834841D413C9000522D4E /* ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897834831D413C9000522D4E /* ImageDetailViewController.m */; };
@@ -30,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		460919FB1D46275E00B76320 /* MaximumTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaximumTasks.h; sourceTree = "<group>"; };
+		460919FC1D46275E00B76320 /* MaximumTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaximumTasks.m; sourceTree = "<group>"; };
 		8978347C1D41309500522D4E /* FlickrFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrFetcher.h; sourceTree = "<group>"; };
 		8978347D1D41309500522D4E /* FlickrFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrFetcher.m; sourceTree = "<group>"; };
 		8978347F1D41320000522D4E /* FlickrItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrItem.h; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 				897834801D41320000522D4E /* FlickrItem.m */,
 				897834821D413C9000522D4E /* ImageDetailViewController.h */,
 				897834831D413C9000522D4E /* ImageDetailViewController.m */,
+				460919FB1D46275E00B76320 /* MaximumTasks.h */,
+				460919FC1D46275E00B76320 /* MaximumTasks.m */,
 			);
 			path = ImageSearch;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 				8978347E1D41309500522D4E /* FlickrFetcher.m in Sources */,
 				B0A8D25A1B99BDCB0001CAD2 /* ViewController.m in Sources */,
 				B0A8D2571B99BDCB0001CAD2 /* AppDelegate.m in Sources */,
+				460919FD1D46275E00B76320 /* MaximumTasks.m in Sources */,
 				897834811D41320000522D4E /* FlickrItem.m in Sources */,
 				B0A8D2541B99BDCB0001CAD2 /* main.m in Sources */,
 				897834841D413C9000522D4E /* ImageDetailViewController.m in Sources */,

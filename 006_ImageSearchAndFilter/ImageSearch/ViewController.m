@@ -10,7 +10,6 @@
 #import "FlickrItem.h"
 #import "ImageDetailViewController.h"
 
-
 @interface ViewController ()
 
 @end
@@ -22,6 +21,7 @@
     [super viewDidLoad];
     fetcher = [[FlickrFetcher alloc] init];
     _items = [[NSMutableArray alloc] init];
+    maxTasks = [[MaximumTasks alloc] init];
     self.imagesCollectionView.dataSource = self;
 }
 
@@ -46,11 +46,9 @@
     
     NSURL* url = [NSURL URLWithString:item.thumbnailURL];
     
-    // get access to the global dispatch queue
-    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(concurrentQueue, ^{
+    [maxTasks addTask:^{
         NSData* data = [NSData dataWithContentsOfURL:url];
-
+        
         // get access to the main dispatch queue
         dispatch_queue_t mainDispatchQueue = dispatch_get_main_queue();
         dispatch_async(mainDispatchQueue, ^{
@@ -58,10 +56,9 @@
             UIImageView* imgView = (UIImageView*)[cell viewWithTag:101];
             imgView.image = [UIImage imageWithData:data];
         });
-    });
+    }];
+    
     return cell;
-    
-    
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

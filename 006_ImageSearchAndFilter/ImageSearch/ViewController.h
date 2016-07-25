@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "FlickrItem.h"
 #import "FlickrFetcher.h"
+#import "MaximumTasks.h"
 
 
 @interface ViewController : UIViewController <UICollectionViewDataSource> {
     FlickrFetcher* fetcher;
+    MaximumTasks* maxTasks;
 }
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UICollectionView *imagesCollectionView;
