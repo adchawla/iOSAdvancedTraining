@@ -14,6 +14,15 @@
     NSLog(@"Timer Func");
 }
 
+-(void) stopThreadImpl {
+    // stop the run loop
+    CFRunLoopStop(CFRunLoopGetCurrent());
+}
+
+-(void) stopThread {
+    [self performSelector:@selector(stopThreadImpl) onThread:self withObject:nil waitUntilDone:NO];
+}
+
 - (void) main {
     @autoreleasepool {
         //set up the timer run loop

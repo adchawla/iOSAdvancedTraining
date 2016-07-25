@@ -25,6 +25,10 @@
     [timerThread start];
 }
 
+- (IBAction)stopThread:(id)sender {
+    [timerThread stopThread];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
