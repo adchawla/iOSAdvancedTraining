@@ -8,7 +8,9 @@
 
 #import "TimerThread.h"
 
-@implementation TimerThread
+@implementation TimerThread {
+    NSTimer * timer;
+}
 
 - (void) timerFunc {
     NSLog(@"Timer Func");
@@ -30,12 +32,16 @@
         NSRunLoop * runLoop = [NSRunLoop currentRunLoop];
             
         // attach a timer to this run loop
-        NSTimer * timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerFunc) userInfo:nil repeats:YES];
-                           
+        timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerFunc) userInfo:nil repeats:YES];
+        
         [runLoop addTimer:timer forMode:NSDefaultRunLoopMode];
-            
-            // start the run loop
-        [runLoop run];
+        
+        //NSPort * port = [[NSMachPort alloc] init];
+        //[runLoop addPort: port forMode:NSDefaultRunLoopMode];
+        // start the run loop
+        CFRunLoopRun();
+        
+        NSLog(@"Coming out of run loop");
     }
 }
 @end
