@@ -13,6 +13,7 @@
 
 @interface ViewController : UIViewController <UICollectionViewDataSource> {
     FlickrFetcher* fetcher;
+    NSOperationQueue* concurrentQ;
 }
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UICollectionView *imagesCollectionView;

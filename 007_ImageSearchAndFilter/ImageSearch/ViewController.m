@@ -23,6 +23,9 @@
     fetcher = [[FlickrFetcher alloc] init];
     _items = [[NSMutableArray alloc] init];
     self.imagesCollectionView.dataSource = self;
+    
+    // create a concurrent operation queue
+    concurrentQ = [[NSOperationQueue alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,15 +44,30 @@
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
     UIImageView* imageView = (UIImageView*)[cell viewWithTag:101];
+    imageView.image = nil;
     
     FlickrItem* item = [_items objectAtIndex:indexPath.row];
     
     NSURL* url = [NSURL URLWithString:item.thumbnailURL];
-    NSData* data = [NSData dataWithContentsOfURL:url];
-    imageView.image = [UIImage imageWithData:data];
+    __block NSData* data;
+    
+    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^{
+        data = [NSData dataWithContentsOfURL:url];
+    }];
+    
+    [op setCompletionBlock: ^{
+        NSBlockOperation * op1 = [NSBlockOperation blockOperationWithBlock:^{
+            UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+            UIImageView* imgView = (UIImageView*)[cell viewWithTag:101];
+            imgView.image = [UIImage imageWithData:data];
+        }];
+        
+        [[NSOperationQueue mainQueue] addOperation:op1];
+    }];
+    
+    [concurrentQ addOperation:op];
+    
     return cell;
-    
-    
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -68,11 +86,22 @@
     NSLog(@"Begin");
     NSString* text = self.searchTextField.text;
     NSString* link = [fetcher getFlickrURL:text];
-    NSString* data = [fetcher getFlickrDataFromURL:link];
-    _items = [fetcher parseFlickrItems:data];
     
-    [self.imagesCollectionView reloadData];
-    NSLog(@"Done");
+    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^{
+        NSString* data = [fetcher getFlickrDataFromURL:link];
+        _items = [fetcher parseFlickrItems:data];
+    }];
+    
+    [op setCompletionBlock: ^{
+        NSBlockOperation * op1 = [NSBlockOperation blockOperationWithBlock:^{
+            [self.imagesCollectionView reloadData];
+            NSLog(@"Done");
+        }];
+        
+        [[NSOperationQueue mainQueue] addOperation:op1];
+    }];
+    
+    [concurrentQ addOperation:op];
 
 }
 @end
