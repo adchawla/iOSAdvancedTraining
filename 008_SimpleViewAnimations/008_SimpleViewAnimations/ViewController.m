@@ -32,10 +32,17 @@
 //    [UIView commitAnimations];
     
     
-    [UIView animateWithDuration:3 animations:^{
-        self.myView.transform = CGAffineTransformMakeRotation(3.14159/2);
-        self.myView.backgroundColor = [UIColor greenColor];
-    }];
+//    [UIView animateWithDuration:3 animations:^{
+//        self.myView.transform = CGAffineTransformMakeRotation(3.14159/2);
+//        self.myView.backgroundColor = [UIColor greenColor];
+//    }];
+    
+    [UIView animateWithDuration:3 delay:0
+        options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse
+        animations:^{
+            self.myView.transform = CGAffineTransformMakeRotation(3.14159/2);
+            self.myView.backgroundColor = [UIColor greenColor];
+    } completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
