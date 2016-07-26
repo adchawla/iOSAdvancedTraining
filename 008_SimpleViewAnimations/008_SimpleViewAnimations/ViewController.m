@@ -20,9 +20,15 @@
     
     self.myView.transform = CGAffineTransformMakeScale(0, 0);
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.myView.transform = CGAffineTransformIdentity;
-    });
+    //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //    self.myView.transform = CGAffineTransformIdentity;
+    //});
+    
+    // create animation block
+    [UIView beginAnimations:@"ANIM" context:NULL];
+    [UIView setAnimationDuration:1];
+    self.myView.transform = CGAffineTransformIdentity;
+    [UIView commitAnimations];
 }
 
 - (void)didReceiveMemoryWarning {
