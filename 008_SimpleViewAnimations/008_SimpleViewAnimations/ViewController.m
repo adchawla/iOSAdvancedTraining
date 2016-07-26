@@ -26,8 +26,9 @@
     
     // create animation block
     [UIView beginAnimations:@"ANIM" context:NULL];
-    [UIView setAnimationDuration:1];
+    [UIView setAnimationDuration:4];
     self.myView.transform = CGAffineTransformIdentity;
+    self.myView.backgroundColor = [UIColor redColor];
     [UIView commitAnimations];
 }
 
