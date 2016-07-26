@@ -11,9 +11,12 @@
 #import "FlickrFetcher.h"
 
 
-@interface ViewController : UIViewController <UICollectionViewDataSource> {
+@interface ViewController
+    : UIViewController <UICollectionViewDataSource>
+{
     FlickrFetcher* fetcher;
     NSOperationQueue* concurrentQ;
+    NSMutableDictionary* downloaderBlocks;
 }
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UICollectionView *imagesCollectionView;

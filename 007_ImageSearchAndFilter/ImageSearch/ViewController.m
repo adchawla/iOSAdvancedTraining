@@ -26,6 +26,7 @@
     
     // create a concurrent operation queue
     concurrentQ = [[NSOperationQueue alloc] init];
+    downloaderBlocks = [[NSMutableDictionary alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,26 +49,39 @@
     
     FlickrItem* item = [_items objectAtIndex:indexPath.row];
     
-    NSURL* url = [NSURL URLWithString:item.thumbnailURL];
-    __block NSData* data;
+    __block NSData* data = nil;
     
     NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^{
-        data = [NSData dataWithContentsOfURL:url];
+        if (!op.cancelled) {
+            NSURL* url = [NSURL URLWithString:item.thumbnailURL];
+            data = [NSData dataWithContentsOfURL:url];
+        }
     }];
     
     [op setCompletionBlock: ^{
         NSBlockOperation * op1 = [NSBlockOperation blockOperationWithBlock:^{
-            UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
-            UIImageView* imgView = (UIImageView*)[cell viewWithTag:101];
-            imgView.image = [UIImage imageWithData:data];
+            if (data != nil || !op.cancelled) {
+                UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+                UIImageView* imgView = (UIImageView*)[cell viewWithTag:101];
+                imgView.image = [UIImage imageWithData:data];
+            }
         }];
         
         [[NSOperationQueue mainQueue] addOperation:op1];
     }];
     
+    [downloaderBlocks setObject:op forKey:item.thumbnailURL];
     [concurrentQ addOperation:op];
     
     return cell;
+}
+
+-(void) collectionView:(UICollectionView *) collectionView didEndDisplayingCell:(nonnull UICollectionViewCell *)cell forItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    FlickrItem* item = [_items objectAtIndex:indexPath.row];
+    NSOperation* op = [downloaderBlocks objectForKey:item.thumbnailURL];
+    [op cancel];
+    
+    [downloaderBlocks removeObjectForKey:item.thumbnailURL];
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
