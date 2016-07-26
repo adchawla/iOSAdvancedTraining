@@ -25,11 +25,17 @@
     //});
     
     // create animation block
-    [UIView beginAnimations:@"ANIM" context:NULL];
-    [UIView setAnimationDuration:4];
-    self.myView.transform = CGAffineTransformIdentity;
-    self.myView.backgroundColor = [UIColor redColor];
-    [UIView commitAnimations];
+//    [UIView beginAnimations:@"ANIM" context:NULL];
+//    [UIView setAnimationDuration:4];
+//    self.myView.transform = CGAffineTransformIdentity;
+//    self.myView.backgroundColor = [UIColor redColor];
+//    [UIView commitAnimations];
+    
+    
+    [UIView animateWithDuration:3 animations:^{
+        self.myView.transform = CGAffineTransformMakeRotation(3.14159/2);
+        self.myView.backgroundColor = [UIColor greenColor];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
